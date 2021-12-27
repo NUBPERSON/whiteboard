@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+ <style>
+    .fas{
+        
+        margin-left: 10px;
+        font-size: 40px;
+    }
+    .outer{
+        height:75px;
+        width:800px;
+        border:1px solid black;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-left: 100px;
+        background-color: gray;
+     }
+     .red{
+         height: 50px;
+         width: 50px;
+         border-radius: 50%;
+         background-color: red;
+     }
+     .green{
+         height: 50px;
+         width: 50px;
+         border-radius: 50%;
+         background-color: green;
+     }
+     .blue{
+         height: 50px;
+         width: 50px;
+         border-radius: 50%;
+         background-color:blue;
+     }
+     .check{
+         height: 50px;
+         width: 50px;
+         border: 1px solid black;
+     }
+ </style>
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+<body>
+   
+   <!-- <div>hello world</div>-->
+   <div class="outer">
+   <i class="fas fa-square-full"></i>
+   <i class="fas fa-grip-lines-vertical"></i>
+   <i class="fas fa-pencil-alt"></i>
+    <div class="red"></div>
+    <div class="green"></div>
+    <div class="blue"></div>
+     </div>
+   
+    <canvas></canvas>
+   
+</body>
+ <!--//used to inject js to html-->
+<script>
+   let board=document.querySelector("canvas");
+   let body=document.querySelector("body");
+   let line=document.querySelector(".fa-grip-lines-vertical");
+   let rect=document.querySelector(".fa-square-full");
+   let pen=document.querySelector(".fa-pencil-alt");
+  // let colortask=document.querySelector(".check");
+   let redc=document.querySelector(".red");
+   let bluec=document.querySelector(".blue");
+   let greenc=document.querySelector(".green");
+    let value="black";
+   // colortask.style.backgroundColor=value;
+      
+ 
+  
+   board.height=window.innerHeight;
+   board.width=window.innerWidth;
+   let recs=0,lins=0,penc=0;
+   let tool=board.getContext('2d');
+   let boarddim=board.getBoundingClientRect(); //start end of the canvas board
+   // tool.fillStyle="green";
+   //tool.fillRect(0,0,200,200);
+   //tool.strokeStyle="red";
+   //tool.strokeRect(100,100,40,40);
+   pen.addEventListener("click",function(){
+          lins=0;
+          recs=0;
+          penc=1;
+   });
+   line.addEventListener("click",function(){
+          lins=1;
+          recs=0;
+          penc=0;
+   });
+   rect.addEventListener("click",function(){
+          recs=1;
+          lins=0;
+          penc=0;
+   });
+   redc.addEventListener("click",function(){
+         value="red";   
+         tool.strokeStyle=value;
+        // colortask.style.backgroundColor=value;
+       });
+       greenc.addEventListener("click",function(){
+         value="green";      
+           tool.strokeStyle=value;
+       });
+       bluec.addEventListener("click",function(){
+         value="blue";     
+         tool.strokeStyle=value; 
+       });
+
+   let ixpos,iypos,fxpos,fypos;
+   let pressed=0;
+   body.addEventListener("mousedown",function(e){
+       // console.log("hihi");
+           ixpos=e.clientX-boarddim.left;
+           iypos=e.clientY-boarddim.top;
+         if(lins || penc){
+           tool.beginPath();
+          tool.moveTo(ixpos,iypos);
+          }
+          if(penc)
+            pressed=1;
+         // console.log(xpos+" "+ypos);
+         
+   });
+   body,addEventListener("mousemove",function(e){
+           fxpos=e.clientX-boarddim.left;
+           fypos=e.clientY-boarddim.top;
+           if(penc && pressed){
+               //tool.beginPath();
+             tool.lineTo(fxpos,fypos);
+             tool.stroke();
+             tool.beginPath();
+             tool.moveTo(fxpos,fypos);
+           }
+   })
+   body.addEventListener("mouseup",function(e){
+           fxpos=e.clientX-boarddim.left;
+           fypos=e.clientY-boarddim.top;
+         if(lins || penc){
+          tool.lineTo(fxpos,fypos);
+          tool.stroke(); //costly so done at last shows the line
+          
+          }
+        if(recs){
+           tool.strokeRect(ixpos,iypos,fxpos-ixpos,fypos-iypos);
+        }  
+        if(penc)
+          pressed=0;
+});
+   
+   
+   
+</script>
+</html>
