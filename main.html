@@ -6,70 +6,50 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
- <style>
-    .fas{
-        
-        margin-left: 10px;
-        font-size: 40px;
-    }
-    .outer{
-        height:75px;
-        width:90vw;
-        border:1px solid black;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        margin-left: 5vw;
-        background-color: khaki;
-     }
-     .red{
-         height: 30px;
-         width: 30px;
-         border-radius: 50%;
-         background-color: red;
-     }
-     .green{
-         height: 30px;
-         width: 30px;
-         border-radius: 50%;
-         background-color: green;
-     }
-     .blue{
-         height: 30px;
-         width: 30px;
-         border-radius: 50%;
-         background-color:blue;
-     }
-     .check{
-         height: 50px;
-         width: 50px;
-         border: 1px solid black;
-     }
-     .outercolor{
-         width:150px;
-         display: flex;
-         justify-content: space-evenly;
-        align-items: center;
-     }
-     .imgs img{
-         height: 40px;
-         width: 40px;
-     }
- </style>
+ 
  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
+ <link rel="stylesheet" href="style.css">
 <body>
    
    <!-- <div>hello world</div>-->
    <div class="outer">
-   <i class="fas fa-square-full"></i>
-   <i class="fas fa-grip-lines-vertical"></i>
-   <i class="fas fa-pencil-alt"></i>
+   <i class="fas fa-square-full">
+        <div class="size">
+                <div class="size1"></div>
+                <div class="size2"></div>
+                <div class="size3"></div>
+                <div class="size4"></div>
+            </div>
+       
+   </i>
+   <i class="fas fa-grip-lines-vertical">
+        <div class="size">
+                <div class="size1"></div>
+                <div class="size2"></div>
+                <div class="size3"></div>
+                <div class="size4"></div>
+            </div>
+   </i>
+   <i class="fas fa-pencil-alt">
+    <div class="size">
+        <div class="size1"></div>
+        <div class="size2"></div>
+        <div class="size3"></div>
+        <div class="size4"></div>
+    </div>
+   </i>
     <div class="imgs">
         <img src="./NewIcons/Download.svg">
+
     </div>
-    <div class="imgs"> 
-        <img src="./NewIcons/Redo.svg">
+    <div class="imgs eraser"> 
+        <img src="./NewIcons/Eraser.svg">
+        <div class="size">
+            <div class="size1"></div>
+            <div class="size2"></div>
+            <div class="size3"></div>
+            <div class="size4"></div>
+        </div>
     </div>
    <div class="outercolor">
     <div class="red"></div>
@@ -88,18 +68,22 @@
    let line=document.querySelector(".fa-grip-lines-vertical");
    let rect=document.querySelector(".fa-square-full");
    let pen=document.querySelector(".fa-pencil-alt");
+   let era=document.querySelector(".eraser")
   // let colortask=document.querySelector(".check");
    let redc=document.querySelector(".red");
    let bluec=document.querySelector(".blue");
    let greenc=document.querySelector(".green");
-    let value="black";
+   let value="black";
+    let size=document.querySelectorAll(".size");
+
+ 
    // colortask.style.backgroundColor=value;
       
  
   
    board.height=window.innerHeight;
    board.width=window.innerWidth;
-   let recs=0,lins=0,penc=0;
+   let recs=0,lins=0,penc=0,eras=0;
    let tool=board.getContext('2d');
    let boarddim=board.getBoundingClientRect(); //start end of the canvas board
    // tool.fillStyle="green";
@@ -107,19 +91,68 @@
    //tool.strokeStyle="red";
    //tool.strokeRect(100,100,40,40);
    pen.addEventListener("click",function(){
+         if(penc==1){
+            size[2].style.display="flex";
+         }
+         else{
+            for(let i=0;i<size.length;i++){
+              size[i].style.display="none";
+              // console.log(i);
+               }
+
+         }
           lins=0;
           recs=0;
           penc=1;
+          eras=0
    });
    line.addEventListener("click",function(){
+    if(lins==1){
+            size[1].style.display="flex";
+         }
+         else{
+            for(let i=0;i<size.length;i++){
+              size[i].style.display="none";
+               //console.log(i);
+               }
+
+         }
           lins=1;
           recs=0;
           penc=0;
+          eras=0;
    });
    rect.addEventListener("click",function(){
+        if(recs==1){
+            size[0].style.display="flex";
+         }
+         else{
+            for(let i=0;i<size.length;i++){
+              size[i].style.display="none";
+              // console.log(i);
+               }
+
+         }
           recs=1;
           lins=0;
           penc=0;
+          eras=0;
+   });
+   era.addEventListener("click",function(){
+    if(eras==1){
+            size[3].style.display="flex";
+         }
+         else{
+            for(let i=0;i<size.length;i++){
+              size[i].style.display="none";
+              // console.log(i);
+               }
+
+         }
+          recs=0;
+          lins=0;
+          penc=0;
+          eras=1;
    });
    redc.addEventListener("click",function(){
          value="red";   
