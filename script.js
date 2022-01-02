@@ -10,6 +10,7 @@ let bluec=document.querySelector(".blue");
 let greenc=document.querySelector(".green");
 let value="black";
  let size=document.querySelectorAll(".size");
+ let stbuttton=document.querySelector(".stbut");
 
 
 // colortask.style.backgroundColor=value;
@@ -279,4 +280,35 @@ size[1].addEventListener("click",function(e){
  
  
  });
- 
+ stbuttton.addEventListener("click",function(e){
+     let qwe=document.createElement("div");
+      qwe.setAttribute("class","sticky");
+      qwe.innerHTML=` <div class="header">
+      <div class="right"></div>
+      <div class="wrong"></div>
+  </div>
+  <div >
+      <textarea cols="30" rows="10" class="textarea"></textarea>
+  </div>`;
+  let sticker=document.querySelector('.sticker');
+    sticker.appendChild(qwe);
+    let minim=qwe.querySelector(".right");
+    let close=qwe.querySelector(".wrong");
+    let clicked=0;
+    let txtarea=qwe.querySelector("textarea");
+     minim.addEventListener("click",function(e){
+         if(clicked){
+             txtarea.style.display="block";
+
+         }
+         else
+         {
+            txtarea.style.display="none";
+         }
+         clicked=(clicked+1)%2;
+    }) 
+    close.addEventListener("click",function(e){
+        qwe.remove();
+    })
+  
+ });
